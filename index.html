@@ -1,0 +1,1086 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Online Calculator</title>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <link
+      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      .hidden {
+        display: none;
+      }
+
+    </style>
+  </head>
+  <body class="flex flex-col items-center min-h-screen bg-gray-100">
+    <nav class="w-full bg-blue-900 p-4">
+      <div class="container mx-auto flex justify-center">
+        <div class="flex space-x-4">
+          <a
+            id="calculator1Link"
+            class="text-white font-semibold hover:bg-blue-700 px-3 py-2 rounded cursor-pointer"
+            >Calculator 1 (Signal Processing)</a
+          >
+          <a
+            id="calculator2Link"
+            class="text-white font-semibold hover:bg-blue-700 px-3 py-2 rounded cursor-pointer"
+            >Calculator 2</a
+          >
+          <a
+            id="calculator3Link"
+            class="text-white font-semibold hover:bg-blue-700 px-3 py-2 rounded cursor-pointer"
+            >Calculator 3</a
+          >
+          <a
+            id="calculator4Link"
+            class="text-white font-semibold hover:bg-blue-700 px-3 py-2 rounded cursor-pointer"
+            >Calculator 4</a
+          >
+          <a
+            id="calculator5Link"
+            class="text-white font-semibold hover:bg-blue-700 px-3 py-2 rounded cursor-pointer"
+            >Calculator 5</a
+          >
+        </div>
+      </div>
+    </nav>
+
+    <div
+      id="calculator1"
+      class="container mx-auto p-6 my-10 bg-white opacity-90 shadow-lg rounded-lg flex flex-row justify-center items-start w-full max-w-3xl"
+    >
+      <div class="inputs flex flex-col items-start">
+        <label for="inputBandwidth">Bandwidth(Hz)</label>
+        <input
+          type="number"
+          id="inputBandwidth"
+          class="mb-4 p-2 border rounded w-64"
+          placeholder="4000"
+          value="4000"
+        />
+        <label for="inputQuantizerBits">Quantizer Bits</label>
+        <input
+          type="number"
+          id="inputQuantizerBits"
+          class="mb-4 p-2 border rounded w-64"
+          placeholder="8"
+          value="8"
+        />
+
+        <label for="inputSourceEncoderRate">Source Encoder Rate</label>
+        <input
+          type="number"
+          id="inputSourceEncoderRate"
+          class="mb-4 p-2 border rounded w-64"
+          placeholder="0.25"
+          value="0.25"
+        />
+        <label for="inputChannelEncoderRate">Channel Encoder Rate</label>
+        <input
+          type="number"
+          id="inputChannelEncoderRate"
+          class="mb-4 p-2 border rounded w-64"
+          placeholder="0.5"
+          value="0.5"
+        />
+
+        <label for="inputInterleaverBits">Interleaver Bits</label>
+        <input
+          type="number"
+          id="inputInterleaverBits"
+          class="mb-4 p-2 border rounded w-64"
+          placeholder="1024"
+          value="1024"
+        />
+        <button
+          onclick="calculate1()"
+          class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 w-full"
+        >
+          Calculate
+        </button>
+      </div>
+
+      <div class="text-center mt-6 w-full h-full m-5">
+        <div
+          class="result w-full border-2 border-gray-300 p-4 text-2xl"
+          id="result1"
+        >
+          Result
+        </div>
+      </div>
+    </div>
+
+    <div
+      id="calculator2"
+      class="container mx-auto p-6 my-10 bg-white opacity-90 shadow-lg rounded-lg flex flex-row justify-center items-start w-full max-w-3xl hidden"
+    >
+      <div class="inputs flex flex-col items-start">
+        <label for="inputResourceBlockBandwidth"
+          >Resource block bandwidth (kHz)</label
+        >
+        <input
+          type="number"
+          id="inputResourceBlockBandwidth"
+          class="mb-4 p-2 border rounded w-64"
+          placeholder="180"
+          value="180"
+        />
+        <label for="subcarrierSpacing">Subcarrier spacing (kHz)</label>
+        <input
+          type="number"
+          id="subcarrierSpacing"
+          class="mb-4 p-2 border rounded w-64"
+          placeholder="15"
+          value="15"
+        />
+
+        <label for="inputNumOfdmSymbolPerResourceBlock"
+          >Number of OFDM symbol per resource block</label
+        >
+        <input
+          type="number"
+          id="inputNumOfdmSymbolPerResourceBlock"
+          class="mb-4 p-2 border rounded w-64"
+          placeholder="7"
+          value="7"
+        />
+        <label for="inputResourceBlockDuration"
+          >Resource block duration (ms)</label
+        >
+        <input
+          type="number"
+          id="inputResourceBlockDuration"
+          class="mb-4 p-2 border rounded w-64"
+          placeholder="0.5"
+          value="0.5"
+        />
+
+        <label for="inputModulation">Modulation (1024-QAM)</label>
+        <input
+          type="number"
+          id="inputModulation"
+          class="mb-4 p-2 border rounded w-64"
+          placeholder="1024"
+          value="1024"
+        />
+        <label for="inputParallelResourceBlocks"
+          >Parallel resource blocks</label
+        >
+        <input
+          type="number"
+          id="inputParallelResourceBlocks"
+          class="mb-4 p-2 border rounded w-64"
+          placeholder="4"
+          value="4"
+        />
+        <button
+          onclick="calculate2()"
+          class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 w-full"
+        >
+          Calculate
+        </button>
+      </div>
+
+      <div class="text-center mt-6 w-full h-full m-5">
+        <div
+          class="result w-full border-2 border-gray-300 p-4 text-2xl"
+          id="result2"
+        >
+          Result
+        </div>
+      </div>
+    </div>
+
+    <div class=" mx-auto p-4 bg-white rounded-lg shadow-lg mb-10 hidden" id="BER_Plot">
+      <div id="plot" class="w-full"></div>
+    </div>
+
+    <div
+      id="calculator3"
+      class="container mx-auto p-6 my-10 bg-white opacity-90 shadow-lg rounded-lg flex flex-row justify-center items-start w-full max-w-3xl hidden"
+    >
+      <div class="inputs flex flex-col items-start">
+        <label for="inputPathLoss">Path Loss (dB)</label>
+        <div class="flex flex-row">
+          <input
+            type="number"
+            id="inputPathLoss"
+            class="mb-4 p-2 border rounded w-64"
+            value="140"
+          />
+          <select id="inputPathLossUnit" class="mb-4 ">
+            <option value="dB">dB</option>
+            <option value="dBm">dBm</option>
+            <option value="Watt">Watt</option>
+          </select>
+        </div>
+        <label for="inputFrequency">Frequency (MHz)</label>
+        <input
+          type="number"
+          id="inputFrequency"
+          class="mb-4 p-2 border rounded w-64"
+          value="900"
+        />
+        <label for="inputTransmitAntennaGain">Transmit Antenna Gain (dB)</label>
+        <div class="flex flex-row">
+          <input
+            type="number"
+            id="inputTransmitAntennaGain"
+            class="mb-4 p-2 border rounded w-64"
+            value="8"
+          />
+          <select id="inputTransmitAntennaGainUnit" class="mb-4 ">
+            <option value="dB">dB</option>
+            <option value="dBm">dBm</option>
+            <option value="Watt">Watt</option>
+          </select>
+        </div>
+
+        
+        <label for="inputReceiveAntennaGain">Receive Antenna Gain (dB)</label>
+        <div class="flex flex-row">
+          <input
+            type="number"
+            id="inputReceiveAntennaGain"
+            class="mb-4 p-2 border rounded w-64"
+            value="0"
+          />
+          <select id="inputReceiveAntennaGainUnit" class="mb-4 ">
+            <option value="dB">dB</option>
+            <option value="dBm">dBm</option>
+            <option value="Watt">Watt</option>
+          </select>
+        </div>
+
+        <label for="inputDataRate">Data Rate (kbps)</label>
+        <input
+          type="number"
+          id="inputDataRate"
+          class="mb-4 p-2 border rounded w-64"
+          value="9.6"
+        />
+        <label for="inputAntennaFeedLineLoss"
+          >Antenna Feed Line Loss (dB)</label
+        >
+        <div class="flex flex-row">
+          <input
+            type="number"
+            id="inputAntennaFeedLineLoss"
+            class="mb-4 p-2 border rounded w-64"
+            value="12"
+          />
+          <select id="inputAntennaFeedLineLossUnit" class="mb-4 ">
+            <option value="dB">dB</option>
+            <option value="dBm">dBm</option>
+            <option value="Watt">Watt</option>
+          </select>
+        </div>
+
+ 
+        <label for="inputOtherLosses">Other Losses (dB)</label>
+        <div class="flex flex-row">
+          <input
+            type="number"
+            id="inputOtherLosses"
+            class="mb-4 p-2 border rounded w-64"
+            value="20"
+          />
+          <select id="inputOtherLossesUnit" class="mb-4 ">
+            <option value="dB">dB</option>
+            <option value="dBm">dBm</option>
+            <option value="Watt">Watt</option>
+          </select>
+        </div>
+
+        <label for="inputFadeMargin">Fade Margin (dB)</label>
+        <div class="flex flex-row">
+          <input
+            type="number"
+            id="inputFadeMargin"
+            class="mb-4 p-2 border rounded w-64"
+            value="8"
+          />
+          <select id="inputFadeMarginUnit" class="mb-4 ">
+            <option value="dB">dB</option>
+            <option value="dBm">dBm</option>
+            <option value="Watt">Watt</option>
+          </select>
+        </div>
+
+
+
+        <label for="inputReceiverAmplifierGain"
+          >Receiver Amplifier Gain (dB)</label
+        >
+        <div class="flex flex-row">
+          <input
+            type="number"
+            id="inputReceiverAmplifierGain"
+            class="mb-4 p-2 border rounded w-64"
+            value="24"
+          />
+          <select id="inputReceiverAmplifierGainUnit" class="mb-4 ">
+            <option value="dB">dB</option>
+            <option value="dBm">dBm</option>
+            <option value="Watt">Watt</option>
+          </select>
+        </div>
+
+        <label for="inputNoiseFigureTotal">Noise Total Figure (dB)</label>
+        <div class="flex flex-row">
+          <input
+            type="number"
+            id="inputNoiseFigureTotal"
+            class="mb-4 p-2 border rounded w-64"
+            value="6"
+          />
+          <select id="inputNoiseFigureTotalUnit" class="mb-4 ">
+            <option value="dB">dB</option>
+            <option value="dBm">dBm</option>
+            <option value="Watt">Watt</option>
+          </select>
+        </div>
+
+
+
+        <label for="inputNoiseTemperature">Noise temperature (Kelven)</label>
+        <input
+          type="number"
+          id="inputNoiseTemperature"
+          class="mb-4 p-2 border rounded w-64"
+          value="290"
+        />
+
+        <label for="inputLinkMargin">Link Margin (dB)</label>
+        <div class="flex flex-row">
+          <input
+            type="number"
+            id="inputLinkMargin"
+            class="mb-4 p-2 border rounded w-64"
+            value="8"
+          />
+          <select id="inputLinkMarginUnit" class="mb-4 ">
+            <option value="dB">dB</option>
+            <option value="dBm">dBm</option>
+            <option value="Watt">Watt</option>
+          </select>
+        </div>
+
+
+        <label for="inputModulationType">Modulation Type</label>
+        <select id="inputModulationType" class="mb-4 p-2 border rounded w-64">
+          <option value="BPSK">BPSK</option>
+          <option value="8-PSK">8-PSK</option>
+          <option value="16-PSK">16-PSK</option>
+        </select></select>
+        <label for="inputMaxBitErrorRate">Max Bit Error Rate </label>
+        <input
+          type="number"
+          id="inputMaxBitErrorRate"
+          class="mb-4 p-2 border rounded w-64"
+          value="0.0001"
+        />
+
+        <button
+          onclick="calculate3()"
+          class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 w-full"
+        >
+          Calculate
+        </button>
+      </div>
+      
+
+      <div class="text-center mt-6 w-full h-full m-5">
+        <div
+          class="result w-full border-2 border-gray-300 p-4 text-2xl"
+          id="result3"
+        >
+          Result
+        </div>
+      </div>
+    </div>
+    
+    <div
+      id="calculator4"
+      class="container mx-auto p-6 my-10 bg-white opacity-90 shadow-lg rounded-lg flex flex-row justify-center items-start w-full max-w-3xl hidden"
+    >
+      
+      <div class="inputs flex flex-col items-start">
+        <label for="inputDataTransmissionBandwidth">Data transmission bandwidth (Mbps)</label>
+        <input
+          type="number"
+          id="inputDataTransmissionBandwidth"
+          class="mb-4 p-2 border rounded w-64"
+          value="20"
+        />
+        <label for="inputMaxSignalPropagationTime">Max signal propagation time from one node to another (micro sec) </label>
+        <input
+          type="number"
+          id="inputMaxSignalPropagationTime"
+          class="mb-4 p-2 border rounded w-64"
+          value="40"
+        />
+        <label for="inputFrameSize">Frame Size (kbit)</label>
+        <input
+          type="number"
+          id="inputFrameSize"
+          class="mb-4 p-2 border rounded w-64"
+          value="10"
+        />
+        <label for="inputFrameRate">Frame Rate (Kfps)</label>
+        <input
+          type="number"
+          id="inputFrameRate"
+          class="mb-4 p-2 border rounded w-64"
+          value="5"
+        />
+
+        <label for="inputProtocolType">Protocol Type</label>
+        <select id="inputProtocolType" class="mb-4 p-2 border rounded w-64">
+          <option value="sloted" >Sloted</option>
+          <option value="unSloted"  >UnSloted</option>
+        </select>
+
+
+
+
+   
+
+        <button
+          onclick="calculate4()"
+          class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 w-full"
+        >
+          Calculate 
+        </button>
+
+      </div>
+
+      <div class="text-center mt-6 w-full h-full m-5">
+        <div
+          class="result w-full border-2 border-gray-300 p-4 text-2xl"
+          id="result4"
+        >
+          Result
+        </div>
+      </div>
+    </div>
+
+    <div
+      id="calculator5"
+      class="container mx-auto p-6 my-10 bg-white opacity-90 shadow-lg rounded-lg flex flex-row justify-center items-start w-full max-w-3xl hidden"
+    >
+      <div class="inputs flex flex-col items-start">
+        <label for="inputCityArea">City Area (Km2)</label>
+        <input
+          type="number"
+          id="inputCityArea"
+          class="mb-4 p-2 border rounded w-64"
+          value="4"
+        />
+
+        <label for="inputNumSubscribers">Number of Subscribers</label>
+        <input
+          type="number"
+          id="inputNumSubscribers"
+          class="mb-4 p-2 border rounded w-64"
+          value="80000"
+        />
+        
+        <label for="inputAvgCallsPerDayPerSubscriper">Average calls per day per subscriber</label>
+        <input
+          type="number"
+          id="inputAvgCallsPerDayPerSubscriper"
+          class="mb-4 p-2 border rounded w-64"
+          value="8"
+        />
+
+        <label for="inputAvgCallDuration">Average call duration (minutes)</label>
+        <input
+          type="number"
+          id="inputAvgCallDuration"
+          class="mb-4 p-2 border rounded w-64"
+          value="3"
+        />
+
+        <label for="inputCallDropProb">Call drop probability</label>
+        <input
+          type="number"
+          id="inputCallDropProb"
+          class="mb-4 p-2 border rounded w-64"
+          value="0.02"
+        />
+
+        <label for="inputMinSIR">Minimum SIR (dB)</label>
+        <input
+          type="number"
+          id="inputMinSIR"
+          class="mb-4 p-2 border rounded w-64"
+          value="13"
+        />
+
+        <label for="inputRefPower">Reference Power (dB)</label>
+        <input
+          type="number"
+          id="inputRefPower"
+          class="mb-4 p-2 border rounded w-64"
+          value="-22"
+        />
+        <label for="inputRefDistance">Reference Distance (meters)</label>
+        <input
+          type="number"
+          id="inputRefDistance"
+          class="mb-4 p-2 border rounded w-64"
+          value="10"
+        />
+        <label for="inputPathLossExponent">Path Loss Exponent</label>
+        <input 
+        type="number" id="inputPathLossExponent" class="mb-4 p-2 border rounded w-64" value="3" />
+
+        <label for="inputNumTimeSlotsPerCarrier">Number of time slots per carrier</label>
+        <input type="number" id="inputNumTimeSlotsPerCarrier" class="mb-4 p-2 border rounded w-64" value="8" />
+        <label for="inputReceiverSensitivity">Receiver Sensitivity (watts)</label>
+        <input type="number" id="inputReceiverSensitivity" class="mb-4 p-2 border rounded w-64" value="0.000007" />
+        
+        
+        
+        <button
+          onclick="calculate5()"
+          class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 w-full"
+        >
+          Calculate
+        </button>
+      </div>
+
+      <div class="text-center mt-6 w-full h-full m-5">
+        <div
+          class="result w-full border-2 border-gray-300 p-4 text-2xl"
+          id="result5"
+        >
+          Result
+        </div>
+      </div>
+    </div>
+
+    <script src="BERvsEbNo.js"></script>
+    <script src="ErlangB.js"></script>
+    <script>
+      const calculator1 = document.getElementById("calculator1");
+      const calculator2 = document.getElementById("calculator2");
+      const BER_Plot = document.getElementById("BER_Plot");
+
+      const calculator3 = document.getElementById("calculator3");
+      const calculator4 = document.getElementById("calculator4");
+      const calculator5 = document.getElementById("calculator5");
+
+
+      const calculator1Link = document.getElementById("calculator1Link");
+      const calculator2Link = document.getElementById("calculator2Link");
+      const calculator3Link = document.getElementById("calculator3Link");
+      const calculator4Link = document.getElementById("calculator4Link");
+      const calculator5Link = document.getElementById("calculator5Link");
+
+      calculator1Link.addEventListener("click", () => {
+        calculator1.classList.remove("hidden");
+        calculator2.classList.add("hidden");
+        calculator3.classList.add("hidden");
+        calculator4.classList.add("hidden");
+        calculator5.classList.add("hidden");
+        BER_Plot.classList.add("hidden");
+      });
+
+      calculator2Link.addEventListener("click", () => {
+        calculator1.classList.add("hidden");
+        calculator2.classList.remove("hidden");
+        calculator3.classList.add("hidden");
+        calculator4.classList.add("hidden");
+        calculator5.classList.add("hidden");
+        BER_Plot.classList.remove("hidden");
+      });
+
+      calculator3Link.addEventListener("click", () => {
+        calculator1.classList.add("hidden");
+        calculator2.classList.add("hidden");
+        calculator3.classList.remove("hidden");
+        calculator4.classList.add("hidden");
+        calculator5.classList.add("hidden");
+        BER_Plot.classList.add("hidden");
+      });
+
+      calculator4Link.addEventListener("click", () => {
+        calculator1.classList.add("hidden");
+        calculator2.classList.add("hidden");
+        calculator3.classList.add("hidden");
+        calculator4.classList.remove("hidden");
+        calculator5.classList.add("hidden");
+        BER_Plot.classList.add("hidden");
+      });
+
+      calculator5Link.addEventListener("click", () => {
+        calculator1.classList.add("hidden");
+        calculator2.classList.add("hidden");
+        calculator3.classList.add("hidden");
+        calculator4.classList.add("hidden");
+        calculator5.classList.remove("hidden");
+        BER_Plot.classList.add("hidden");
+      });
+
+      function calculate1() {
+        const inputBandwidth = parseFloat(
+          document.getElementById("inputBandwidth").value
+        );
+        const inputQuantizerBits = parseFloat(
+          document.getElementById("inputQuantizerBits").value
+        );
+        const inputSourceEncoderRate = parseFloat(
+          document.getElementById("inputSourceEncoderRate").value
+        );
+        const inputChannelEncoderRate = parseFloat(
+          document.getElementById("inputChannelEncoderRate").value
+        );
+        const inputInterleaverBits = parseFloat(
+          document.getElementById("inputInterleaverBits").value
+        );
+
+        // force the interleaver bits to be a power of 2 and if not alert the user and return
+        if (Math.log2(inputInterleaverBits) % 1 !== 0) {
+          alert("Interleaver bits must be a power of 2");
+          return;
+        }
+
+        const samplingFrequency = 2 * inputBandwidth;
+        const numQuantizerLevels = Math.pow(2, inputQuantizerBits);
+        const bitRateAtOutputOfSourceEncoder =
+          samplingFrequency * inputQuantizerBits * inputSourceEncoderRate;
+        const bitRateAtOutputOfChannelEncoder =
+          bitRateAtOutputOfSourceEncoder / inputChannelEncoderRate;
+        const bitRateAtOutputOfInterleaver = bitRateAtOutputOfChannelEncoder;
+
+        const result = `
+          <div class="grid grid-cols-2 gap-4">
+            <div class="font-semibold">Sampling Frequency:</div>
+            <div>${samplingFrequency} Hz</div>
+            <div class="font-semibold">Number of Quantizer Levels:</div>
+            <div>${numQuantizerLevels}</div>
+            <div class="font-semibold">Bit Rate at Output of Source Encoder:</div>
+            <div>${bitRateAtOutputOfSourceEncoder} bps</div>
+            <div class="font-semibold">Bit Rate at Output of Channel Encoder:</div>
+            <div>${bitRateAtOutputOfChannelEncoder} bps</div>
+            <div class="font-semibold">Bit Rate at Output of Interleaver:</div>
+            <div>${bitRateAtOutputOfInterleaver} bps</div>
+          </div>
+        `;
+
+        document.getElementById("result1").innerHTML = result;
+      }
+
+      function calculate2() {
+        const inputResourceBlockBandwidth = parseFloat(
+          document.getElementById("inputResourceBlockBandwidth").value
+        );
+        const subcarrierSpacing = parseFloat(
+          document.getElementById("subcarrierSpacing").value
+        );
+        const inputNumOfdmSymbolPerResourceBlock = parseFloat(
+          document.getElementById("inputNumOfdmSymbolPerResourceBlock").value
+        );
+        const inputResourceBlockDuration = parseFloat(
+          document.getElementById("inputResourceBlockDuration").value
+        );
+        const inputModulation = parseFloat(
+          document.getElementById("inputModulation").value
+        );
+        const inputParallelResourceBlocks = parseFloat(
+          document.getElementById("inputParallelResourceBlocks").value
+        );
+
+        // force the interleaver bits to be a power of 2 and if not alert the user and return
+        if (Math.log2(inputModulation) % 1 !== 0) {
+          alert("Modulation bits must be a power of 2");
+          return;
+        }
+
+        const numBitsPerResourceElement = Math.log2(inputModulation);
+        const numBitsPerOFDMSymbol =
+          numBitsPerResourceElement *
+          (inputResourceBlockBandwidth / subcarrierSpacing);
+        const numBitsPerResourceBlock =
+          numBitsPerOFDMSymbol * inputNumOfdmSymbolPerResourceBlock;
+        const maximumRate =
+          (inputParallelResourceBlocks * numBitsPerResourceBlock) /
+          inputResourceBlockDuration /
+          1000;
+
+        const result = `
+          <div class="grid grid-cols-2 gap-4">
+            <div class="font-semibold">Bits per resource element:</div>
+            <div>${numBitsPerResourceElement} bits</div>
+            <div class="font-semibold">Bits per OFDM symbol:</div>
+            <div>${numBitsPerOFDMSymbol} bits</div>
+            <div class="font-semibold">Bits per resource block:</div>
+            <div>${numBitsPerResourceBlock} bits/RB</div>
+            <div class="font-semibold">Maxinum rate:</div>
+            <div>${maximumRate} Mbps</div>
+          </div>
+        `;
+
+        document.getElementById("result2").innerHTML = result;
+      }
+      
+      function anyToDB(value, unit){
+        if (unit === "dB"){
+          return value;
+        }else if (unit === "dBm"){
+          return value - 30;
+        }else if (unit === "Watt"){
+          return 10 * Math.log10(value);
+        }
+      }
+
+      function calculate3() {
+        var inputPathLoss = parseFloat(
+          document.getElementById("inputPathLoss").value
+        );
+        const inputPathLossUnit = document.getElementById("inputPathLossUnit").value;
+        inputPathLoss = anyToDB(inputPathLoss, inputPathLossUnit);
+
+
+
+        const inputFrequency = parseFloat(
+          document.getElementById("inputFrequency").value
+        );
+        var inputTransmitAntennaGain = parseFloat(
+          document.getElementById("inputTransmitAntennaGain").value
+        );
+        const inputTransmitAntennaGainUnit = document.getElementById("inputTransmitAntennaGainUnit").value;
+        inputTransmitAntennaGain = anyToDB(inputTransmitAntennaGain, inputTransmitAntennaGainUnit);
+
+        var inputReceiveAntennaGain = parseFloat(
+          document.getElementById("inputReceiveAntennaGain").value
+        );
+        const inputReceiveAntennaGainUnit = document.getElementById("inputReceiveAntennaGainUnit").value;
+        inputReceiveAntennaGain = anyToDB(inputReceiveAntennaGain, inputReceiveAntennaGainUnit);
+
+
+        const inputDataRate = parseFloat(
+          document.getElementById("inputDataRate").value
+        );
+        const DataRateInDB = 10 * Math.log10(inputDataRate*1000);
+
+        var inputAntennaFeedLineLoss = parseFloat(
+          document.getElementById("inputAntennaFeedLineLoss").value
+        );
+        const inputAntennaFeedLineLossUnit = document.getElementById("inputAntennaFeedLineLossUnit").value;
+        inputAntennaFeedLineLoss = anyToDB(inputAntennaFeedLineLoss, inputAntennaFeedLineLossUnit);
+
+        var inputOtherLosses = parseFloat(
+          document.getElementById("inputOtherLosses").value
+        );
+        const inputOtherLossesUnit = document.getElementById("inputOtherLossesUnit").value;
+        inputOtherLosses = anyToDB(inputOtherLosses, inputOtherLossesUnit);
+
+        var inputFadeMargin = parseFloat(
+          document.getElementById("inputFadeMargin").value
+        );
+        const inputFadeMarginUnit = document.getElementById("inputFadeMarginUnit").value;
+        inputFadeMargin = anyToDB(inputFadeMargin, inputFadeMarginUnit);
+
+        var inputReceiverAmplifierGain = parseFloat(
+          document.getElementById("inputReceiverAmplifierGain").value
+        );
+        const inputReceiverAmplifierGainUnit = document.getElementById("inputReceiverAmplifierGainUnit").value;
+        inputReceiverAmplifierGain = anyToDB(inputReceiverAmplifierGain, inputReceiverAmplifierGainUnit);
+
+        var inputNoiseFigureTotal = parseFloat(
+          document.getElementById("inputNoiseFigureTotal").value
+        );
+        const inputNoiseFigureTotalUnit = document.getElementById("inputNoiseFigureTotalUnit").value;
+        inputNoiseFigureTotal = anyToDB(inputNoiseFigureTotal, inputNoiseFigureTotalUnit);
+
+        const inputNoiseTemperature = parseFloat(
+          document.getElementById("inputNoiseTemperature").value
+        );
+        const NoiseTempInDB = 10 * Math.log10(inputNoiseTemperature);
+
+
+        var inputLinkMargin = parseFloat(
+          document.getElementById("inputLinkMargin").value
+        );
+        const inputLinkMarginUnit = document.getElementById("inputLinkMarginUnit").value;
+        inputLinkMargin = anyToDB(inputLinkMargin, inputLinkMarginUnit);
+
+        const inputModulationType = document.getElementById("inputModulationType")
+          .value;
+        const inputMaxBitErrorRate = parseFloat(
+          document.getElementById("inputMaxBitErrorRate").value
+        );
+
+        const k = 1.38 * Math.pow(10, -23);
+        const kInDB = 10 * Math.log10(k);
+        
+        // Calculations
+        const ebNoDb = calculateEbNo(inputModulationType, inputMaxBitErrorRate);
+
+        const Pr = inputLinkMargin + kInDB + NoiseTempInDB + inputNoiseFigureTotal + DataRateInDB + ebNoDb
+
+        const Pt = Pr + inputPathLoss + inputAntennaFeedLineLoss + inputOtherLosses + inputFadeMargin - inputTransmitAntennaGain - inputReceiveAntennaGain - 0 -  inputReceiverAmplifierGain;
+
+        const PtToWatt = Math.pow(10, Pt/10);
+        
+        const result = `
+          <div class="grid grid-cols-2 gap-4">
+            <div class="font-semibold">Received Power:</div>
+            <div>${Pr.toFixed(1)} dBm</div>
+            <div class="font-semibold">Transmitted Power:</div>
+            <div>${Pt.toFixed(1)} dBm</div>
+            <div class="font-semibold">Transmitted Power (Watt):</div>
+            <div>${PtToWatt.toFixed(1)} W</div>
+          </div>
+        `;
+
+        document.getElementById("result3").innerHTML = result;
+      }
+
+      function calculate4() {
+        const inputDataTransmissionBandwidth = parseFloat(
+          document.getElementById("inputDataTransmissionBandwidth").value
+        );
+        const inputMaxSignalPropagationTime = parseFloat(
+          document.getElementById("inputMaxSignalPropagationTime").value
+        );
+        const inputFrameSize = parseFloat(
+          document.getElementById("inputFrameSize").value
+        );
+        const inputFrameRate = parseFloat(
+          document.getElementById("inputFrameRate").value
+        );
+        const inputProtocolType = document.getElementById("inputProtocolType").value;
+
+
+        // Calculations
+
+        const Tb = 1/(inputDataTransmissionBandwidth*1000000);
+
+        const Tframe = (inputFrameSize*1000) * Tb;
+
+
+        const G = (inputFrameRate*1000) * Tframe;
+
+        const alpha = (inputMaxSignalPropagationTime*0.000001) / Tframe;
+
+        var Sth = 0;
+
+        if (inputProtocolType === "sloted"){
+          Sth = (G * Math.E**(-2*alpha*Tframe)) / (G*(1+(2*alpha)) + Math.E**(-alpha*G));
+        }else{
+          Sth = (alpha*G*Math.pow(Math.E, (-2*alpha*Tframe)))/ (1-Math.pow(Math.E, (-alpha*G))+alpha);
+        }
+        
+        const result = `
+          <div class="grid grid-cols-2 gap-4">
+            <div class="font-semibold">Tb:</div>
+            <div>${Tb} s</div>
+            <div class="font-semibold">Tframe:</div>
+            <div>${Tframe.toFixed(4)} s</div>
+            <div class="font-semibold">G:</div>
+            <div>${G.toFixed(3)}</div>
+            <div class="font-semibold">Alpha:</div>
+            <div>${alpha.toFixed(3)}</div>
+            <div class="font-semibold">Sth:</div>
+            <div>${Sth.toFixed(3)}</div>
+          </div>
+        `;
+
+        document.getElementById("result4").innerHTML = result;
+      }
+
+      function calculate5(){
+        const inputCityArea = parseFloat(
+          document.getElementById("inputCityArea").value
+        );
+        const inputNumSubscribers = parseFloat(
+          document.getElementById("inputNumSubscribers").value
+        );
+        const inputAvgCallsPerDayPerSubscriper = parseFloat(
+          document.getElementById("inputAvgCallsPerDayPerSubscriper").value
+        );
+        const inputAvgCallDuration = parseFloat(
+          document.getElementById("inputAvgCallDuration").value
+        );
+        const inputCallDropProb = parseFloat(
+          document.getElementById("inputCallDropProb").value
+        );
+        const inputMinSIR = parseFloat(
+          document.getElementById("inputMinSIR").value
+        );
+        const inputRefPower = parseFloat(
+          document.getElementById("inputRefPower").value
+        );
+        const inputRefDistance = parseFloat(
+          document.getElementById("inputRefDistance").value
+        );
+        const inputPathLossExponent = parseFloat(
+          document.getElementById("inputPathLossExponent").value
+        );
+        const inputNumTimeSlotsPerCarrier = parseFloat(
+          document.getElementById("inputNumTimeSlotsPerCarrier").value
+        );
+        const inputReceiverSensitivity = parseFloat(
+          document.getElementById("inputReceiverSensitivity").value
+        );
+
+        
+        const RefPowerInWatt = Math.pow(10, inputRefPower/10);
+
+        // P(d) = P(d0)*(d0/d)^n
+        
+        const d0 = inputRefDistance;
+
+        const n = inputPathLossExponent;
+        
+        const d = d0 * 1/(Math.pow((inputReceiverSensitivity/RefPowerInWatt), 1/n));
+
+        // ===========
+        const MaxCellSize = (3*Math.sqrt(3)/2) * Math.pow(d,2);
+        // ===========
+        const NumCells = inputCityArea*1000000 / MaxCellSize;
+        // ===========
+        const TrafficLoadSystem = (inputNumSubscribers * inputAvgCallsPerDayPerSubscriper * inputAvgCallDuration) / (24*60);
+
+        const TrafficLoadCell = TrafficLoadSystem / NumCells;
+        
+        const NB = 6
+
+        const ClusterSizeSIR = Math.pow(10, inputMinSIR/10);
+        
+        var N = Math.pow((ClusterSizeSIR * NB), 2/inputPathLossExponent)/3;
+
+        N = Math.ceil(N);
+
+        const numChannelsFromErlangB = findChannels(TrafficLoadCell, inputCallDropProb);
+
+        var numCarrierPerCell = numChannelsFromErlangB / inputNumTimeSlotsPerCarrier;
+        numCarrierPerCell = Math.ceil(numCarrierPerCell);
+
+        const numCarrierPerSystem = N * numCarrierPerCell;
+
+
+        const result = `
+          <div class="grid grid-cols-2 gap-4">
+            <div class="font-semibold">Ref Power (Watt):</div>
+            <div>${RefPowerInWatt.toFixed(4)} W</div>
+            <div class="font-semibold">Max Distance:</div>
+            <div>${d.toFixed(4)} meters</div>
+            <div class="font-semibold">Max Cell Size:</div>
+            <div>${MaxCellSize.toFixed(4)} Km2</div>
+            <div class="font-semibold">Number of Cells:</div>
+            <div>${NumCells.toFixed(4)}</div>
+            <div class="font-semibold">Traffic Load System:</div>
+            <div>${TrafficLoadSystem.toFixed(4)}</div>
+            <div class="font-semibold">Traffic Load Cell:</div>
+            <div>${TrafficLoadCell.toFixed(4)}</div>
+            <div class="font-semibold">Number of Channels from Erlang B:</div>
+            <div>${numChannelsFromErlangB.toFixed(4)}</div>
+            <div class="font-semibold">Number of Carrier Per Cell:</div>
+            <div>${numCarrierPerCell.toFixed(4)}</div>
+            <div class="font-semibold">Number of Carrier Per System:</div>
+            <div>${numCarrierPerSystem.toFixed(4)}</div>
+          </div>
+        `;
+        document.getElementById("result5").innerHTML = result;
+
+      }
+
+
+    </script>
+
+
+<script>
+  function Q(x) {
+    return 0.5 * (1 - erf(x / Math.sqrt(2)));
+  }
+
+  function erf(x) {
+    // Approximation of the error function
+    var sign = x >= 0 ? 1 : -1;
+    x = Math.abs(x);
+    var a1 = 0.254829592;
+    var a2 = -0.284496736;
+    var a3 = 1.421413741;
+    var a4 = -1.453152027;
+    var a5 = 1.061405429;
+    var p = 0.3275911;
+    var t = 1.0 / (1.0 + p * x);
+    var y =
+      1.0 -
+      ((((a5 * t + a4) * t + a3) * t + a2) * t + a1) * t * Math.exp(-x * x);
+    return sign * y;
+  }
+
+  function ber_bpsk(eb_no) {
+    return Q(Math.sqrt(2 * eb_no));
+  }
+
+  function ber_psk(eb_no, M) {
+    var k = Math.log2(M);
+    return (
+      (2 / k) * Q(Math.sqrt(2 * k * eb_no * Math.sin(Math.PI / M) ** 2))
+    );
+  }
+
+  // Eb/No range
+  var eb_no_db = Array.from({ length: 180 }, (v, k) => k * 0.1);
+  var eb_no = eb_no_db.map((x) => 10 ** (x / 10));
+
+  // Calculate BER for each modulation type
+  var ber_bpsk_vals = eb_no.map(ber_bpsk);
+  var ber_8psk_vals = eb_no.map((x) => ber_psk(x, 8));
+  var ber_16psk_vals = eb_no.map((x) => ber_psk(x, 16));
+
+  var trace1 = {
+    x: eb_no_db,
+    y: ber_bpsk_vals,
+    mode: "lines",
+    name: "BPSK",
+  };
+
+  var trace2 = {
+    x: eb_no_db,
+    y: ber_8psk_vals,
+    mode: "lines",
+    name: "8-PSK",
+  };
+
+  var trace3 = {
+    x: eb_no_db,
+    y: ber_16psk_vals,
+    mode: "lines",
+    name: "16-PSK",
+  };
+
+  var data = [trace1, trace2, trace3];
+
+  var layout = {
+    title: "BER vs Eb/No for BPSK, 8-PSK, and 16-PSK",
+    xaxis: {
+      title: "Eb/No (dB)",
+    },
+    yaxis: {
+      title: "Bit Error Rate (BER)",
+      type: "log",
+      autorange: true,
+    },
+    legend: {
+      x: 1,
+      y: 1,
+    },
+  };
+
+  Plotly.newPlot("plot", data, layout);
+</script>
+
+  </body>
+</html>
